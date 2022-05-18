@@ -926,29 +926,29 @@ class _RestClient implements RestClient {
     return value;
   }
 
-  RequestOptions newRequestOptions(Options? options) {
+  RequestOptions newRequestOptions(Object? options) {
     if (options is RequestOptions) {
       return options as RequestOptions;
     }
-    if (options == null) {
-      return RequestOptions(path: '');
+    if (options is Options) {
+      return RequestOptions(
+        method: options.method,
+        sendTimeout: options.sendTimeout,
+        receiveTimeout: options.receiveTimeout,
+        extra: options.extra,
+        headers: options.headers,
+        responseType: options.responseType,
+        contentType: options.contentType.toString(),
+        validateStatus: options.validateStatus,
+        receiveDataWhenStatusError: options.receiveDataWhenStatusError,
+        followRedirects: options.followRedirects,
+        maxRedirects: options.maxRedirects,
+        requestEncoder: options.requestEncoder,
+        responseDecoder: options.responseDecoder,
+        path: '',
+      );
     }
-    return RequestOptions(
-      method: options.method,
-      sendTimeout: options.sendTimeout,
-      receiveTimeout: options.receiveTimeout,
-      extra: options.extra,
-      headers: options.headers,
-      responseType: options.responseType,
-      contentType: options.contentType.toString(),
-      validateStatus: options.validateStatus,
-      receiveDataWhenStatusError: options.receiveDataWhenStatusError,
-      followRedirects: options.followRedirects,
-      maxRedirects: options.maxRedirects,
-      requestEncoder: options.requestEncoder,
-      responseDecoder: options.responseDecoder,
-      path: '',
-    );
+    return RequestOptions(path: '');
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
